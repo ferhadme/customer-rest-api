@@ -4,6 +4,7 @@ import com.ferhad.customerrestapi.exception.customer.CustomerNotFoundException;
 import com.ferhad.customerrestapi.model.Customer;
 import com.ferhad.customerrestapi.model.dto.CustomerCreationDto;
 import com.ferhad.customerrestapi.model.dto.CustomerGetDto;
+import com.ferhad.customerrestapi.model.dto.CustomerUpdateDto;
 import com.ferhad.customerrestapi.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/customers")
+@RequestMapping(CustomerController.ENDPOINT)
 public class CustomerController {
     private final CustomerService customerService;
     private final ModelMapper modelMapper;
+
+    public static final String ENDPOINT = "/api/v1/customers";
 
     private static final Logger logger = Logger.getLogger("Controller_Logger");
 
@@ -56,12 +59,31 @@ public class CustomerController {
         Customer customer = modelMapper.map(customerDto, Customer.class);
         customerService.save(customer);
         logger.info("Customer ====> " + customer);
-        URI customerLocation = URI.create(String.format("/api/v1/customers/%s", customer.getId()));
+        URI customerLocation = URI.create(String.format("%s/%s", ENDPOINT, customer.getId()));
 
         return ResponseEntity
                 .created(customerLocation)
                 .body(modelMapper.map(customer, CustomerCreationDto.class));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        customerService.delete(id);
+        return ResponseEntity
+                .ok("Customer with id " + id + " has been deleted");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> update(@PathVariable Long id,
+                                           @RequestBody @Valid CustomerUpdateDto customerDto) throws CustomerNotFoundException {
+        Customer customer = customerService.get(id);
+        modelMapper.map(customerDto, customer);
+        logger.info("Customer after update =====> " + customer);
+        customerService.save(customer);
+        return ResponseEntity
+                .ok(customer);
+    }
+
 }
 
 

@@ -13,4 +13,6 @@ public interface CustomerService {
     Customer get(Long id) throws CustomerNotFoundException;
 
     Customer save(Customer customerDto);
+
+    void delete(Long id);
 }

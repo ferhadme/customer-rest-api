@@ -37,5 +37,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
-    // TODO: 10/21/21 ALL DAO - DTO conversions happens in service
+    @Override
+    public void delete(Long id) {
+        customerRepository.deleteById(id);
+    }
+
 }
