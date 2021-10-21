@@ -3,7 +3,6 @@ package com.ferhad.customerrestapi.service;
 import com.ferhad.customerrestapi.exception.customer.CustomerNotFoundException;
 import com.ferhad.customerrestapi.model.Customer;
 import com.ferhad.customerrestapi.repository.CustomerRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

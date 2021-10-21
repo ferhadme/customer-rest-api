@@ -1,4 +1,4 @@
-Sample REST API for Customer Entity
+REST API for Customer Management
 -----------------------------------
 * Exception handling for REST APIs
 * DAO - DTO (vice versa) conversion using ModelMapper
