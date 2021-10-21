@@ -1,0 +1,6 @@
+Sample REST API for Customer Entity
+-----------------------------------
+* Exception handling for REST APIs
+* DAO - DTO (vice versa) conversion using ModelMapper
+* Pagination and Sorting
+* and others
