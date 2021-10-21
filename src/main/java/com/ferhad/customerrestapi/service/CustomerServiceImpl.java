@@ -3,15 +3,13 @@ package com.ferhad.customerrestapi.service;
 import com.ferhad.customerrestapi.exception.customer.CustomerNotFoundException;
 import com.ferhad.customerrestapi.model.Customer;
 import com.ferhad.customerrestapi.repository.CustomerRepository;
-import org.springframework.data.domain.Page;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -24,16 +22,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAll(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        Page<Customer> page = customerRepository.findAll(pageable);
-        return page.hasContent() ?
-                page.getContent() :
-                new ArrayList<>();
+        return customerRepository.findAll(pageable)
+                .getContent();
     }
 
     @Override
     public Customer get(Long id) throws CustomerNotFoundException {
-        Optional<Customer> customer = customerRepository.findById(id);
-        return customer.orElseThrow(CustomerNotFoundException::new);
+        return customerRepository.findById(id)
+                .orElseThrow(CustomerNotFoundException::new);
     }
 
     @Override

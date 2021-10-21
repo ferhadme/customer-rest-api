@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,8 +26,8 @@ public class Customer {
     private String name;
 
     @NotNull
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @NotNull
-    private LocalDate editedAt;
+    private LocalDateTime editedAt;
 }
