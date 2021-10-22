@@ -3,4 +3,5 @@ REST API for Customer Management
 * Exception handling for REST APIs
 * DAO - DTO (vice versa) conversion using ModelMapper
 * Pagination and Sorting
+* Unit testing with Junit5 and Mockito
 * and others
