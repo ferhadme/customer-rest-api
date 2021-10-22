@@ -5,3 +5,9 @@ REST API for Customer Management
 * Pagination and Sorting
 * Unit testing with Junit5 and Mockito
 * and others
+
+
+===================================
+TODO
+- To write unit tests for controller layer
+- To write unit tests for repository layer

@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer get(Long id) throws CustomerNotFoundException {
         return customerRepository.findById(id)
-                .orElseThrow(CustomerNotFoundException::new);
+                .orElseThrow(() -> new CustomerNotFoundException(CustomerExceptionHandler.CUSTOMER_NOT_FOUND));
     }
 
     @Override

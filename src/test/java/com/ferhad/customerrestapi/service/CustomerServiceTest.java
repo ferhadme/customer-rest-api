@@ -30,15 +30,22 @@ class CustomerServiceTest {
 
     @BeforeEach
     void setUp() {
-        Customer customer = Customer.builder()
+        Optional<Customer> customer = Optional.of(
+                Customer.builder()
                 .name("Farhad")
                 .id(1L)
-                .build();
+                .build());
 
         Mockito.when(customerRepository.findByName("Farhad"))
-                .thenReturn(Optional.of(customer));
+                .thenReturn(customer);
 
         Mockito.when(customerRepository.findByName("Togrul"))
+                .thenReturn(Optional.empty());
+
+        Mockito.when(customerRepository.findById(1L))
+                .thenReturn(customer);
+
+        Mockito.when(customerRepository.findById(2L))
                 .thenReturn(Optional.empty());
     }
 
@@ -58,4 +65,18 @@ class CustomerServiceTest {
         assertEquals(CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage());
     }
 
+    @Test
+    @DisplayName("Get id of valid customer")
+    public void whenValidCustomerId_thenCustomerShouldBeFound() throws CustomerNotFoundException {
+        Customer customer = customerService.get(1L);
+        assertEquals(1L, customer.getId());
+    }
+
+    @Test
+    @DisplayName("Get id of invalid customer")
+    public void whenInvalidCustomerId_thenExceptionShouldBeThrown() {
+        CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
+                () -> customerService.get(2L));
+        assertEquals(CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage());
+    }
 }
