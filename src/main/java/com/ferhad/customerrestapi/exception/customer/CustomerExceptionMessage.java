@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class CustomerNotFoundExceptionMessage {
+public class CustomerExceptionMessage {
     private HttpStatus status;
     private String msg;
 }

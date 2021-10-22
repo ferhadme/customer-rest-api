@@ -2,8 +2,6 @@ package com.ferhad.customerrestapi.service;
 
 import com.ferhad.customerrestapi.exception.customer.CustomerNotFoundException;
 import com.ferhad.customerrestapi.model.Customer;
-import com.ferhad.customerrestapi.model.dto.CustomerCreationDto;
-import com.ferhad.customerrestapi.model.dto.CustomerGetDto;
 
 import java.util.List;
 
@@ -12,7 +10,9 @@ public interface CustomerService {
 
     Customer get(Long id) throws CustomerNotFoundException;
 
-    Customer save(Customer customerDto);
+    Customer getByName(String name) throws CustomerNotFoundException;
+
+    void save(Customer customerDto);
 
     void delete(Long id);
 }

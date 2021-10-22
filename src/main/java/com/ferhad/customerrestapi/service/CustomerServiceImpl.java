@@ -32,8 +32,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer getByName(String name) throws CustomerNotFoundException {
+        return customerRepository.findByName(name)
+                .orElseThrow(CustomerNotFoundException::new);
+    }
+
+    @Override
+    public void save(Customer customer) {
+        customerRepository.save(customer);
     }
 
     @Override

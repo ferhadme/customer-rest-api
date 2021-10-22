@@ -24,7 +24,7 @@ public class CustomerController {
 
     public static final String ENDPOINT = "/api/v1/customers";
 
-    private static final Logger logger = Logger.getLogger("Controller_Logger");
+    private static final Logger logger = Logger.getLogger("controller.CustomerController");
 
     public CustomerController(CustomerService customerService, ModelMapper modelMapper) {
         this.customerService = customerService;
@@ -49,6 +49,15 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<CustomerGetDto> get(@PathVariable Long id) throws CustomerNotFoundException {
         Customer customer = customerService.get(id);
+        CustomerGetDto customerGetDto = modelMapper.map(customer, CustomerGetDto.class);
+        return ResponseEntity
+                .ok(customerGetDto);
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<CustomerGetDto> get(@RequestParam String name) throws CustomerNotFoundException {
+        logger.info("name as parameter to /name ====> " + name);
+        Customer customer = customerService.getByName(name);
         CustomerGetDto customerGetDto = modelMapper.map(customer, CustomerGetDto.class);
         return ResponseEntity
                 .ok(customerGetDto);
