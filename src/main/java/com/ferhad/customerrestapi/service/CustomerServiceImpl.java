@@ -1,5 +1,6 @@
 package com.ferhad.customerrestapi.service;
 
+import com.ferhad.customerrestapi.exception.CustomerExceptionHandler;
 import com.ferhad.customerrestapi.exception.customer.CustomerNotFoundException;
 import com.ferhad.customerrestapi.model.Customer;
 import com.ferhad.customerrestapi.repository.CustomerRepository;
@@ -34,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getByName(String name) throws CustomerNotFoundException {
         return customerRepository.findByName(name)
-                .orElseThrow(CustomerNotFoundException::new);
+                .orElseThrow(() -> new CustomerNotFoundException(CustomerExceptionHandler.CUSTOMER_NOT_FOUND));
     }
 
     @Override

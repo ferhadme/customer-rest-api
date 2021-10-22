@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @ResponseStatus
-public class NotFoundExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
+    public static final String CUSTOMER_NOT_FOUND = "Customer not found";
+    public static final String BAD_REQUEST_FOR_NAME_PARAM = "Bad request for name parameter";
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<CustomerExceptionMessage> customerNotFoundExceptionHandler() {
