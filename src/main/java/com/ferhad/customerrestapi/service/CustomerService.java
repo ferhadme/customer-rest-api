@@ -12,7 +12,7 @@ public interface CustomerService {
 
     Customer getByName(String name) throws CustomerNotFoundException;
 
-    void save(Customer customerDto);
+    Customer save(Customer customer);
 
     void delete(Long id);
 }

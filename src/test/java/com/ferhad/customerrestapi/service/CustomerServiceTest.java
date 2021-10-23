@@ -67,7 +67,9 @@ class CustomerServiceTest {
     @DisplayName("Get name of valid customer")
     public void whenValidCustomerName_thenCustomerShouldBeFound() throws CustomerNotFoundException {
         Customer customer = customerService.getByName("Farhad");
-        assertEquals("Farhad", customer.getName());
+        assertEquals(
+                "Farhad", customer.getName()
+        );
     }
 
     @Test
@@ -76,14 +78,18 @@ class CustomerServiceTest {
         CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> customerService.getByName("Togrul"));
         logger.info("Exception when customer not found ====> " + exception.getMessage());
-        assertEquals(CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage());
+        assertEquals(
+                CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage()
+        );
     }
 
     @Test
     @DisplayName("Get id of valid customer")
     public void whenValidCustomerId_thenCustomerShouldBeFound() throws CustomerNotFoundException {
         Customer customer = customerService.get(1L);
-        assertEquals(1L, customer.getId());
+        assertEquals(
+                1L, customer.getId()
+        );
     }
 
     @Test
@@ -91,18 +97,31 @@ class CustomerServiceTest {
     public void whenInvalidCustomerId_thenExceptionShouldBeThrown() {
         CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> customerService.get(2L));
-        assertEquals(CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage());
+        assertEquals(
+                CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage()
+        );
     }
 
     @Test
     @DisplayName("Get all customers")
     public void whenAllCustomers_thenAllCustomersShouldBeReturned() {
         List<Customer> customers = customerService.getAll(0, 10, "id");
-        assertEquals(10, customers.size());
+        assertEquals(
+                10, customers.size()
+        );
     }
 
-    
 
+    @Test
+    @DisplayName("Save new customer")
+    public void whenNewCustomerSaved_thenCustomerShouldBeSaved() {
+        Customer customer = Mockito.mock(Customer.class);
+        Mockito.when(customerRepository.save(customer))
+                        .thenReturn(customer);
+        assertEquals(
+                customer, customerService.save(customer)
+        );
+    }
 
 
 
