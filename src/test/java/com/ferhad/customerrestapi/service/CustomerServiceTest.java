@@ -12,7 +12,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -47,6 +50,17 @@ class CustomerServiceTest {
 
         Mockito.when(customerRepository.findById(2L))
                 .thenReturn(Optional.empty());
+
+        List<Customer> customers = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Customer el = Mockito.mock(Customer.class);
+            logger.info("Mocked customer el =====> " + el.getId() + "; " + el.getName());
+            customers.add(el);
+        }
+        PageImpl<Customer> page = new PageImpl<>(customers);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("id"));
+        Mockito.when(customerRepository.findAll(pageable))
+                .thenReturn(page);
     }
 
     @Test
@@ -79,4 +93,19 @@ class CustomerServiceTest {
                 () -> customerService.get(2L));
         assertEquals(CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage());
     }
+
+    @Test
+    @DisplayName("Get all customers")
+    public void whenAllCustomers_thenAllCustomersShouldBeReturned() {
+        List<Customer> customers = customerService.getAll(0, 10, "id");
+        assertEquals(10, customers.size());
+    }
+
+    
+
+
+
+
+
+
 }
