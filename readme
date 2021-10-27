@@ -4,9 +4,6 @@ REST API for Customer Management
 * DAO - DTO (vice versa) conversion using ModelMapper
 * Pagination and Sorting
 * Unit testing with Junit5 and Mockito
+* Spring boot actuator
+* Configuration with yml
 * and others
-
-
-===================================
-TODO
-- To write unit tests for controller layer
