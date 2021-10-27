@@ -9,6 +9,4 @@ REST API for Customer Management
 
 ===================================
 TODO
-- Complete unit tests for service layer
 - To write unit tests for controller layer
-- To write unit tests for repository layer
