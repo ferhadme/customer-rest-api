@@ -12,7 +12,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +68,7 @@ class CustomerServiceTest {
 
     @Test
     @DisplayName("Get name of valid customer")
-    public void whenValidCustomerName_thenCustomerShouldBeFound() throws CustomerNotFoundException {
+    void whenValidCustomerName_thenCustomerShouldBeFound() throws CustomerNotFoundException {
         Customer customer = customerService.getByName("Farhad");
         assertEquals(
                 "Farhad", customer.getName()
@@ -74,7 +77,7 @@ class CustomerServiceTest {
 
     @Test
     @DisplayName("Get name of invalid customer")
-    public void whenInvalidCustomerName_thenExceptionShouldBeThrown() {
+    void whenInvalidCustomerName_thenExceptionShouldBeThrown() {
         CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> customerService.getByName("Togrul"));
         logger.info("Exception when customer not found ====> " + exception.getMessage());
@@ -85,7 +88,7 @@ class CustomerServiceTest {
 
     @Test
     @DisplayName("Get id of valid customer")
-    public void whenValidCustomerId_thenCustomerShouldBeFound() throws CustomerNotFoundException {
+    void whenValidCustomerId_thenCustomerShouldBeFound() throws CustomerNotFoundException {
         Customer customer = customerService.get(1L);
         assertEquals(
                 1L, customer.getId()
@@ -94,7 +97,7 @@ class CustomerServiceTest {
 
     @Test
     @DisplayName("Get id of invalid customer")
-    public void whenInvalidCustomerId_thenExceptionShouldBeThrown() {
+    void whenInvalidCustomerId_thenExceptionShouldBeThrown() {
         CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
                 () -> customerService.get(2L));
         assertEquals(
@@ -104,17 +107,16 @@ class CustomerServiceTest {
 
     @Test
     @DisplayName("Get all customers")
-    public void whenAllCustomers_thenAllCustomersShouldBeReturned() {
+    void whenAllCustomers_thenAllCustomersShouldBeReturned() {
         List<Customer> customers = customerService.getAll(0, 10, "id");
         assertEquals(
                 10, customers.size()
         );
     }
 
-
     @Test
     @DisplayName("Save new customer")
-    public void whenNewCustomerSaved_thenCustomerShouldBeSaved() {
+    void whenNewCustomerSaved_thenCustomerShouldBeSaved() {
         Customer customer = Mockito.mock(Customer.class);
         Mockito.when(customerRepository.save(customer))
                         .thenReturn(customer);
@@ -123,6 +125,35 @@ class CustomerServiceTest {
         );
     }
 
+
+    @Test
+    @DisplayName("Delete customer")
+    void deleteCustomer_thenCustomerShouldBeDeleted() throws CustomerNotFoundException {
+        // Optional<Customer> customer = Optional.of(
+        //         Customer.builder()
+        //                 .name("Ali")
+        //                 .id(10L)
+        //                 .build());
+
+        // Mockito.when(customerRepository.save(customer.get()))
+        //         .thenReturn(customer.get());
+        // Mockito.when(customerRepository.findById(10L))
+        //         .thenReturn(customer);
+
+        // Customer customerGet = customerService.get(10L);
+        // assertEquals(10L, customerGet.getId());
+
+        // CustomerNotFoundException exception = Assertions.assertThrows(CustomerNotFoundException.class,
+        //         () -> {
+        //             customerService.delete(10L);
+        //             Customer customerDeleted = customerService.get(10L);
+        //         });
+        // assertEquals(
+        //         CustomerExceptionHandler.CUSTOMER_NOT_FOUND, exception.getMessage()
+        // );
+
+
+    }
 
 
 
