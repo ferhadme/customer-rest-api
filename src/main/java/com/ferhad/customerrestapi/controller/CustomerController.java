@@ -79,7 +79,9 @@ public class CustomerController {
     public ResponseEntity<String> delete(@PathVariable Long id) {
         customerService.delete(id);
         return ResponseEntity
-                .ok("Customer with id " + id + " has been deleted");
+                .noContent()
+                .header("Content-Length", "0")
+                .build();
     }
 
     @PutMapping("/{id}")
